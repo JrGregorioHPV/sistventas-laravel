@@ -1,0 +1,2 @@
+<a href="{{ route('categoria.show', $Id) }}" id="editProduct" data-original-title="Editar" class="btn btn-primary btn-sm">Ver</a>
+<a href="{{ route('categoria.edit', $Id) }}" data-id="<?php $row->id ?>" class="btn btn-warning btn-sm">Editar</a>
