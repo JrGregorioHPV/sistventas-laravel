@@ -70,88 +70,14 @@
 <script src="{{ asset('lib/AdminLTE/3.0.0/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 <!-- Toastr -->
 <script src="{{ asset('lib/AdminLTE/3.0.0/plugins/toastr/toastr.min.js') }}"></script>
+<!-- Campos Ocultos -->
+<input type="hidden" id="Url" url="{{ $Url }}" />
+<input type="hidden" id="Path" url="{{ $Path }}" />
+<!-- Categoria Js -->
+<script src="{{ asset('js/sistema/categoria.js') }}"></script>
 
 <script>
-  $(document).ready(function(){
-    $('#tbl_Categoria').DataTable({
-      "serverSide": true,
-      "ajax": "{{ url('api/categorias') }}",
-      "searching": true,
-      "info": true,
-      "paging": true,
-      "ordering": true,
-      "lengthChange": true,
-      "autoWidth": false,
-      "columns": [
-        {data: 'Id'},
-        {data: 'Categoria'},
-        {data: 'created_at'},
-        {data: 'btn'},
-      ],
-      columnDefs: [ {
-      targets: 2,
-      render:function(data){
-      return moment(data).format('DD/MM/YYYY');}
-    } ],
-      "language": {
-        "info": "_TOTAL_ Registro",
-        "search": "Buscar:",
-        "paginate": {
-          "next": "Siguiente",
-          "previous": "Anterior",
-        },
-        "lengthMenu": 'Mostrar <select>'+
-            '<option value="10">10</option>'+
-            '<option value="30">30</option>'+
-            '<option value="-1">Todos</option>'+
-            '</select> registros',
-        "loadingRecords": "Cargando...",
-        "processing": "Procesando...",
-        "emptyTable": "No hay datos",
-        "zeroRecords": "No hay coincidencias",
-        "infoEmpty": "",
-        "infoFiltered": ""
-      }
-    });
 
-
-
-$('#ver').click(function(){
-  console.log("OK");
-$('#modal-default').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var recipient = button.data('whatever') // Extract info from data-* attributes
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-  var modal = $(this)
-  modal.find('.modal-title').text('New message to ' + recipient)
-  modal.find('.modal-body input').val(recipient)
-}); 
-});
-
-$('body').on('click', '#Verr', function () {
-      var product_id = $(this).data('id');
-      $.get("{{ route('categoria.index') }}" +'/' + product_id +'/edit', function (data) {
-         // $('#modelHeading').html("Edit Product");
-          $('#btnCerrar').text("Cerrar");
-          $('#btnGuardar').hide();
-          //$('#ajaxModel').modal('show');
-          //$('#product_id').val(data.Id);
-          $('#Col1').html(data.Id);
-          $('#Col2').html(data.Categoria);
-          $('#Col3').html(data.created_at);
-       
-
-          console.log(data.Id);
-          console.log(data.Categoria);
-          console.log(data.created_at);
-
-
-  $('.modal-title').text('Ver Categoria' )
-
-      })
-   });
-  });
 </script>
 </body>
 </html>

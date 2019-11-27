@@ -57,35 +57,21 @@
         <!-- /.card-footer-->
       </div>
       <!-- /.card -->
-
     </section>
     <!-- /.content -->
 
-
-
-    <div class="modal fade" id="modal-default">
+<!-- Modal -->
+<div class="modal fade" id="modal-default">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Default Modal</h4>
+              <h4 class="modal-title"></h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <table class="table table-hover">
-    <tr>
-        <th>ID</th>
-        <th>Categoría</th>
-        <th>Fecha de Creación</th>
-    </tr>
-    <tr>
-        <td id="Col1"></td>
-        <td id="Col2"></td>
-        <td id="Col3"></td>
-    </tr>
-
-</table>
+            @include('sistema.modulos.categoria.modal')
             </div>
             <div class="modal-footer ">
               <button type="button" id="btnCerrar" class="btn btn-default" data-dismiss="modal">Cerrar</button>

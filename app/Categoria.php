@@ -15,6 +15,7 @@ class Categoria extends Model
      * @var array
      */
     protected $table = 'categorias'; /* Nombre de Tabla */
+    protected $primaryKey = 'Id'; /* Llave Primaria */
 
     protected $fillable = [
         'Id', 'Categoria', 'created_at'
