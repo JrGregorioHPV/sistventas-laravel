@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Sistema;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Route; 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 use DataTables;
 use App\Categoria;
 
@@ -31,13 +32,13 @@ class CategoriaController extends Controller
         //->addColumn('btn', 'sistema.modulos.categoria.botones', function($row))
         ->addColumn('btn', function($row){
 
-            $btn1 = '<a href="javascript:void(0)" data-toggle="modal" data-target="#modal-ver" data-toggle="tooltip" data-id="'.$row->Id.'" data-original-title="Ver" id="Ver" class="btn btn-success btn-sm mr-1">
+            $btn1 = '<a href="javascript:void(0)" data-toggle="modal" data-target="#modal-Mostrar" data-toggle="tooltip" data-id="'.$row->Id.'" data-original-title="Mostrar" id="btn-Mostrar" class="btn btn-success btn-sm mr-1">
             <i class="fas fa-eye mr-1"></i>Ver</a>';
 
-            $btn2 = '<a href="javascript:void(0)" data-toggle="modal" data-target="#modal-default" data-id="'.$row->Id.'" data-original-title="Editar" id="Editar" class="btn btn-warning btn-sm mr-1">
+            $btn2 = '<a href="javascript:void(0)" data-toggle="modal" data-target="#modal-default" data-id="'.$row->Id.'" data-original-title="Editar" id="btn-Editar" class="btn btn-warning btn-sm mr-1">
         <i class="fas fa-edit mr-1"></i>Editar</a>';
    
-            $btn3 = $btn1.$btn2.'<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->Id.'" data-original-title="Eliminar" id="Eliminar" class="btn btn-danger btn-sm">
+            $btn3 = $btn1.$btn2.'<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->Id.'" data-original-title="Eliminar" id="btn-Eliminar" class="btn btn-danger btn-sm">
            <i class="far fa-trash-alt mr-1"></i>Eliminar</a>';
     
                             return $btn3;
@@ -69,12 +70,12 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        // Almacenamiento
-        Categoria::updateOrCreate(
-            ['Id' => $request->Id],
-            ['Categoria' => $request->Categoria]);        
-   
-        return response()->json(['success'=>'Product saved successfully.']);
+        // Agregar
+        
+        $Modelo = Categoria::create($request->all());        
+        
+        return response()->json(
+            ['success'=>'Guardado bien...', $Modelo]);
     }
 
     /**
@@ -120,7 +121,18 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Actualizar
+        if ($request->ajax()){
+        $request->validate([
+            '_Categoria' => 'required',
+        ]);
+
+            $Modelo = Categoria::find($id);
+            $Modelo->Categoria = $request->_Categoria;
+            $Modelo->update();
+            return response()->json(
+            ['success' => 'El registro se ha actualizado', $Modelo]);
+        }
     }
 
     /**
@@ -132,9 +144,7 @@ class CategoriaController extends Controller
     public function destroy($id)
     {
         // Eliminar
-        //$ddd = Categoria
         $Modelo = Categoria::findOrFail($id);
-        //$Modelo = Categoria::where('Id', $id);
         $Modelo->delete();
         return response()->json(['success'=>'El registro ha sido borrado.']);
     }

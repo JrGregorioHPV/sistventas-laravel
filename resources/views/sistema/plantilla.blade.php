@@ -19,7 +19,7 @@
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="{{ asset('lib/AdminLTE/3.0.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
   <!-- Toastr -->
-  <link rel="stylesheet" href="{{ asset('lib/AdminLTE/3.0.0/plugins/toastr/toastr.min.css') }}">  
+  <link rel="stylesheet" href="{{ asset('lib/toastr/toastr.min.css') }}">  
   <!-- Google Font: Source Sans Pro -->
   <link href="{{ asset('lib/AdminLTE/3.0.0/dist/css/google-fonts.css?family=Source+Sans+Pro:300,400,400i,700') }}" rel="stylesheet">
 </head>
@@ -39,9 +39,10 @@
   </div>
   <!-- /.content-wrapper -->
 
-  <footer class="main-footer">
+  <!-- Footer -->
     @include("sistema.footer")
-  </footer>
+  <!-- /Footer -->
+  
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -69,12 +70,18 @@
 <!-- SweetAlert2 -->
 <script src="{{ asset('lib/AdminLTE/3.0.0/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 <!-- Toastr -->
-<script src="{{ asset('lib/AdminLTE/3.0.0/plugins/toastr/toastr.min.js') }}"></script>
+<script src="{{ asset('lib/toastr/toastr.min.js') }}"></script>
 <!-- Campos Ocultos -->
 <input type="hidden" id="Url" url="{{ $Url }}" />
 <input type="hidden" id="Path" url="{{ $Path }}" />
-<!-- Categoria Js -->
+
+<!-- Sistema Js -->
+<script src="{{ asset('js/sistema/sistema.js') }}"></script>
+<!-- CRUD Js -->
 <script src="{{ asset('js/sistema/categoria.js') }}"></script>
+<!-- Categoria Js -->
+<script src="{{ asset('js/sistema/datatable.js') }}"></script>
+<script src="{{ asset('js/sistema/crud.js') }}"></script>
 
 <script>
 

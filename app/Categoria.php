@@ -16,8 +16,9 @@ class Categoria extends Model
      */
     protected $table = 'categorias'; /* Nombre de Tabla */
     protected $primaryKey = 'Id'; /* Llave Primaria */
+    public $incrementing = false; /* ID Incremento */
 
     protected $fillable = [
-        'Id', 'Categoria', 'created_at'
+        'Categoria'
     ];
 }
