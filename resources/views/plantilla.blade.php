@@ -128,7 +128,7 @@
             @yield('content')
         </main>
         </div>
-        {{ Auth::user()->nombre }}
+        
 
     <!--JavaScript Materialize -->
     <script type="text/javascript" src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>

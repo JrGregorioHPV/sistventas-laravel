@@ -11,7 +11,7 @@ $(document).ready(function (){
         ordering: true,
         lengthChange: true,
         autoWidth: false,
-        order: [[ 1, "asc" ]], // Id orden Ascendente
+        order: [[ 0, "desc" ]], // Id orden Ascendente
         columns: [
           {data: 'Id'},
           {data: 'Categoria'},

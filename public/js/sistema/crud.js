@@ -33,7 +33,7 @@ $(document).ready(function (){
             .addClass('btn-primary');
             
         $('#Id').val('');
-        $('#Categoria-Formulario').trigger("reset");
+        $('#Formulario').trigger("reset");
     });
 
     // VER (Show) ------------------------------------
@@ -63,7 +63,7 @@ $(document).ready(function (){
     // EDITAR (Edit) ---------------------------------
     $('body').on('click', '#btn-Editar', function (e) {
         e.preventDefault();
-        var Id = $(this).data('id');
+        var Id = $(this).data('id'); // Id
         Status = $("#btn-Guardar").attr("data-original-title", "Editar");
         $('input[name=_method]').val('PUT');
         //console.log(Status);
@@ -86,9 +86,10 @@ $(document).ready(function (){
                 .html("Modificar")
                 .removeClass('btn-primary')
                 .addClass('btn-warning');
+            /* Captura de Datos */
             $('#Id').val(data.Id);
             $('#txt_Categoria').val(data.Categoria);
-            /* Salida de Datos */
+            /* Salida en Consola */
             console.log(data.Id);
             console.log(data.Categoria);
         });
@@ -100,35 +101,33 @@ $(document).ready(function (){
         $(this).html('Guardando...');
         var Id = $("#Id").val();
         var my_url = Url;
-        var datosForm = $('#Categoria-Formulario').serialize();
         var type = "POST";
-        var categoria = $('#txt_Categoria').val();
         Metodo = $("#btn-Guardar").attr("data-original-title");
-        //var Id = $(this).data('id');
         
         if (Metodo == "Agregar"){
-            datosForm = {Categoria:categoria, updated_at:''};
+            DatosFormulario(); /* Función Datos Formulario */
             type = "POST"; //for updating existing resource
             my_url = Url;
         }
         if (Metodo == "Editar"){
-            datosForm = datosForm;
+            DatosFormulario(); /* Función Datos Formulario */
+            //console.log('info: '+JSON.stringify(datos));
             type = "PUT"; //for updating existing resource
             my_url += '/' + Id;
         }
-        console.log('Tipo: '+type+' | URL: '+datosForm);
+        //console.log('Tipo: '+type+' | URL: '+JSON.stringify(datos));
     
         /* Ajax */
         $.ajax({
-            data: datosForm,
+            data: Datos,
             url: my_url,
             type: type,
             dataType: 'json',
-            success: function (data) {
-                $('#Categoria-Formulario').trigger("reset");
+            success: function (data) {   
                 console.info(data);
                 Tabla.draw();
                 toastr.success('Post Updated Successfully.', 'Success Alert', {timeOut: 5000});
+                $('#Formulario').trigger("reset"); /* Limpia Formulario */
             },
             error: function (data) {
                 console.error('Error:', data);
@@ -142,20 +141,44 @@ $(document).ready(function (){
     $('body').on('click', '#btn-Eliminar', function (e) {
         e.preventDefault();
         var Id = $(this).data('id');
-  
-        /* Ajax */
-        $.ajax({
-            type: 'DELETE',
-            url: Url+'/'+Id,
-            success: function (data) {
-                Tabla.ajax.reload();
-                console.info('Borrado exitosamente...', data);
-                console.info('Id: ', Id);
-                console.info('Url: ', Url+'/'+Id);
-            },
-            error: function (data) {
-                console.error('Error:', data);
+
+        /* Confirmación de Eliminación */
+        Swal.fire({
+            title: 'Confirmación de Eliminación',
+            text: "¿Desea eliminar este registro?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'Cancelar'
+        }).then((Resultado) => {
+            if (Resultado.value) {
+                /* Ajax */
+                $.ajax({
+                    type: 'DELETE',
+                    url: Url+'/'+Id,
+                    success: function (data) {
+                        Tabla.ajax.reload();
+                        console.info('Borrado exitosamente...', data);
+                        console.info('Id: ', Id);
+                        console.info('Url: ', Url+'/'+Id);
+                        Swal.fire(
+                            'Borraro!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    },
+                    error: function (data) {
+                        console.error('Error:', data);
+                        Swal.fire(
+                            'Error!',
+                            'Your file has been deleted.',
+                            'error'
+                        )
+                    }
+                }); /* Fin Ajax */
             }
-        });
+        }); /* Fin SweetAlert2 */
     });
 });

@@ -8,8 +8,15 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>Categoría</h1>
+            <hr>
             <a href="#" data-original-title="Mostrar" name="POST" id="btn-Agregar" data-toggle="modal" data-target="#modal-default" class="btn btn-primary">
             <i class="fas fa-plus-circle mr-1"></i>Agregar Categoría</a>
+        
+            <a href="#" data-original-title="Mostrar" name="POST" id="btn-Agregar" data-toggle="modal" data-target="#modal-default" class="btn btn-danger">
+            <i class="far fa-file-pdf mr-1"></i>PDF</a>
+
+            <a href="#" data-original-title="Mostrar" name="POST" id="btn-Agregar" data-toggle="modal" data-target="#modal-default" class="btn btn-success">
+            <i class="far fa-file-excel mr-1"></i>Excel</a>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -20,12 +27,6 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
-
-
-
-
-    
 
 <!-- Contenido Principal -->
 <section class="content">
@@ -44,7 +45,7 @@
         </div>
         <div class="card-body">
         <!-- Tabla Categoría -->
-          <table id="tbl_Categoria" class="table table-bordered table-hover table-striped">
+          <table id="tbl_Categoria" class="table table-bordered table-hover table-striped table-sm">
             <thead class="bg-olive">
               <tr>
                 <th>ID</th>
@@ -69,11 +70,11 @@
 
 
 <!-- Modal -->
-<form role="form" method="POST" id="Categoria-Formulario" name="Categoria-Formulario" class="form-horizontal">
+<form role="form" method="POST" id="Formulario" name="Formulario" class="form-horizontal">
 <div class="modal fade" id="modal-default">
 <input type="hidden" name="_Id" id="Id">
 <input type="hidden" name="_method" value="">
-<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -84,6 +85,7 @@
             </div>
             <div class="modal-body">
             @include('sistema.modulos.categoria.modal')
+            {{ csrf_field() }}
             </form>
             </div>
             <div class="modal-footer ">

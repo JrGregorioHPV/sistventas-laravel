@@ -20,7 +20,7 @@ class CategoriaController extends Controller
     {
         $Path = $request->path(); /* Path */
         $Url = $request->url(); /* URL */
-        //return view('sistema/modulos/categoria/categoria');
+        $NombreRuta = $request->route()->getName(); /* Alias Ruta */
 
         // DataTables
         if ($request->ajax()) {
@@ -49,7 +49,8 @@ class CategoriaController extends Controller
         //->toJson();
     }
 
-        return view('sistema/modulos/categoria/categoria', compact('Path', 'Url'));
+        return view('sistema/modulos/categoria/categoria', 
+        compact('Path', 'Url', 'NombreRuta'));
     }
 
     /**
@@ -123,13 +124,16 @@ class CategoriaController extends Controller
     {
         // Actualizar
         if ($request->ajax()){
-        $request->validate([
-            '_Categoria' => 'required',
-        ]);
+        /*$request->validate([
+            'Categoria' => 'required',
+        ]);*/
 
             $Modelo = Categoria::find($id);
-            $Modelo->Categoria = $request->_Categoria;
-            $Modelo->update();
+            //$Modelo->Categoria = $request->xCategoria;
+            //$Modelo->update($request->all());
+            //$Modelo = $request->all();
+            $Modelo->update(['Categoria' => $request->Categoria]);
+            //$Modelo->update();
             return response()->json(
             ['success' => 'El registro se ha actualizado', $Modelo]);
         }

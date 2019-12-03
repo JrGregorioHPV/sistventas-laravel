@@ -74,11 +74,11 @@
 <!-- Campos Ocultos -->
 <input type="hidden" id="Url" url="{{ $Url }}" />
 <input type="hidden" id="Path" url="{{ $Path }}" />
+<input type="hidden" id="AliasRuta" url="{{ $NombreRuta }}" />
 
 <!-- Sistema Js -->
 <script src="{{ asset('js/sistema/sistema.js') }}"></script>
-<!-- CRUD Js -->
-<script src="{{ asset('js/sistema/categoria.js') }}"></script>
+
 <!-- Categoria Js -->
 <script src="{{ asset('js/sistema/datatable.js') }}"></script>
 <script src="{{ asset('js/sistema/crud.js') }}"></script>
