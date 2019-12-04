@@ -92,8 +92,11 @@ class CategoriaController extends Controller
         return view('sistema.modulos.categoria.mostrar', 
             compact('dataCategoria'));
             */
-            $Categoria = Categoria::find($id);
-            return response()->json($Categoria);
+            $datos = Categoria::find($id);
+            return view('sistema.modulos.categoria.mostrar', 
+            compact('datos'));
+            
+            //return response()->json($datos);
     }
 
     /**
@@ -105,12 +108,9 @@ class CategoriaController extends Controller
     public function edit($id)
     {
         // Editar
-        $Categoria = Categoria::find($id);
-        return response()->json($Categoria); // JSON
-
-        //$editarCategoria = Categoria::find($id);
-        //return view('sistema/modulos/categoria/editar', 
-            //compact('editarCategoria'));
+        $Datos = Categoria::find($id);
+        return response()->json($Datos); // JSON
+        //return view('sistema.modulos.categoria.editar', compact('Datos'));
     }
 
     /**

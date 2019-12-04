@@ -8,14 +8,14 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>Categoría</h1>
-            <hr>
+            <!-- Botón Agregar -->
             <a href="#" data-original-title="Mostrar" name="POST" id="btn-Agregar" data-toggle="modal" data-target="#modal-default" class="btn btn-primary">
             <i class="fas fa-plus-circle mr-1"></i>Agregar Categoría</a>
-        
-            <a href="#" data-original-title="Mostrar" name="POST" id="btn-Agregar" data-toggle="modal" data-target="#modal-default" class="btn btn-danger">
+            <!-- Botón PDF -->
+            <a href="#" data-original-title="PDF" name="POST" id="btn-Agregar" data-toggle="modal" data-target="#modal-default" class="btn btn-danger">
             <i class="far fa-file-pdf mr-1"></i>PDF</a>
-
-            <a href="#" data-original-title="Mostrar" name="POST" id="btn-Agregar" data-toggle="modal" data-target="#modal-default" class="btn btn-success">
+            <!-- Botón Excel -->
+            <a href="#" data-original-title="Excel" name="POST" id="btn-Agregar" data-toggle="modal" data-target="#modal-default" class="btn btn-success">
             <i class="far fa-file-excel mr-1"></i>Excel</a>
           </div>
           <div class="col-sm-6">
@@ -83,7 +83,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="modal-body">
             @include('sistema.modulos.categoria.modal')
             {{ csrf_field() }}
             </form>
@@ -110,8 +110,8 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
-            @include('sistema.modulos.categoria.mostrar')
+            <div class="modal-body" id="modal-body">
+            
             </div>
             <div class="modal-footer ">
               <button type="submit" id="btn-OK" data-original-title="" class="btn btn-primary" data-dismiss="modal">Save changes</button>          
@@ -122,4 +122,5 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
+
 @endsection

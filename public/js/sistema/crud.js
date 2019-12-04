@@ -36,12 +36,18 @@ $(document).ready(function (){
         $('#Formulario').trigger("reset");
     });
 
-    // VER (Show) ------------------------------------
+    // MOSTRAR (Show) ------------------------------------
     $('body').on('click', '#btn-Mostrar', function (e) {
         e.preventDefault();
         var Id = $(this).data('id');
 
-        $.get(Url +'/' + Id, function (data) {
+        $.ajax({
+            url: Url +'/' + Id,
+            dataType: 'html',
+            success: function(response){
+                $('#modal-body').html(response);
+            }
+        });
             /* Cabecera Modal */
             $('.modal-header')
                 .removeClass('bg-primary bg-warning bg-danger')
@@ -52,12 +58,8 @@ $(document).ready(function (){
                 .html("OK")
                 .removeClass('btn-primary btn-warning')
                 .addClass('btn-success');
-            $('#Id-Mostrar').val(data.Id);
-            $('#txt_Categoria').val(data.Categoria);
-            /* Salida de Datos */
-            console.log(data.Id);
-            console.log(data.Categoria);
-        });
+            //$('#Id-Mostrar').val(data.Id);
+            //$('#txt_Categoria').val(data.Categoria);
     });
 
     // EDITAR (Edit) ---------------------------------
@@ -65,12 +67,9 @@ $(document).ready(function (){
         e.preventDefault();
         var Id = $(this).data('id'); // Id
         Status = $("#btn-Guardar").attr("data-original-title", "Editar");
-        $('input[name=_method]').val('PUT');
-        //console.log(Status);
-        //Status = $("#btnGuardar").removeAttr("href");
-        
-        //$.get("{{ route('sistema/categoria.index') }}" +'/' + product_id +'/edit', function (data) {
-        $.get(Url +'/' + Id +'/edit', function (data) {
+        //$('input[name=_method]').val('PUT');
+
+        $.get(Url +'/' + Id +'/edit', function (datos) {
             /* Cabecera Modal  */
             $('.modal-header')
                 .removeClass('')
@@ -87,11 +86,8 @@ $(document).ready(function (){
                 .removeClass('btn-primary')
                 .addClass('btn-warning');
             /* Captura de Datos */
-            $('#Id').val(data.Id);
-            $('#txt_Categoria').val(data.Categoria);
             /* Salida en Consola */
-            console.log(data.Id);
-            console.log(data.Categoria);
+            CapturaDatos(datos);           
         });
     });
 
@@ -103,30 +99,47 @@ $(document).ready(function (){
         var my_url = Url;
         var type = "POST";
         Metodo = $("#btn-Guardar").attr("data-original-title");
+
+        var dataString = $("#Formulario :input[id!='Id'][name!='_method'][name!='_token']").serialize();
+        console.log('salida: '+dataString);
         
         if (Metodo == "Agregar"){
             DatosFormulario(); /* Función Datos Formulario */
             type = "POST"; //for updating existing resource
             my_url = Url;
+            /* SweetAlert2 */
+            var icon = 'success';
+            var title = 'Registro Agregado';
+            var text = 'El nuevo registro se ha almacenado con éxito!';
+            var msjtoastr = 'agregado';
         }
         if (Metodo == "Editar"){
             DatosFormulario(); /* Función Datos Formulario */
-            //console.log('info: '+JSON.stringify(datos));
+            console.log('info: '+JSON.stringify(Datos));
             type = "PUT"; //for updating existing resource
             my_url += '/' + Id;
-        }
-        //console.log('Tipo: '+type+' | URL: '+JSON.stringify(datos));
-    
+            /* Mensaje SweetAlert2 */
+            var icon = 'success';
+            var title = 'Registro Modificado';
+            var text = 'El registro se ha modificado satisfactoriamente!';
+            /* Mensaje Toastr */
+            var msjtoastr = 'actualizado';
+        }    
         /* Ajax */
         $.ajax({
             data: Datos,
             url: my_url,
             type: type,
             dataType: 'json',
-            success: function (data) {   
+            success: function (data) {
+                Swal.fire({
+                    icon: icon,
+                    title: title,
+                    text: text,
+                });
                 console.info(data);
                 Tabla.draw();
-                toastr.success('Post Updated Successfully.', 'Success Alert', {timeOut: 5000});
+                toastr.success('El registro se ha '+msjtoastr+' con éxito.', 'Perfecto', {timeOut: 5000});
                 $('#Formulario').trigger("reset"); /* Limpia Formulario */
             },
             error: function (data) {
@@ -146,7 +159,7 @@ $(document).ready(function (){
         Swal.fire({
             title: 'Confirmación de Eliminación',
             text: "¿Desea eliminar este registro?",
-            icon: 'warning',
+            icon: 'error',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -164,18 +177,20 @@ $(document).ready(function (){
                         console.info('Id: ', Id);
                         console.info('Url: ', Url+'/'+Id);
                         Swal.fire(
-                            'Borraro!',
-                            'Your file has been deleted.',
+                            'Borrado!',
+                            'El registro se ha eliminado del sistema.',
                             'success'
-                        )
+                        ),
+                        toastr.success('Registro eliminado.', 'Perfecto');
                     },
                     error: function (data) {
                         console.error('Error:', data);
                         Swal.fire(
                             'Error!',
-                            'Your file has been deleted.',
+                            'El registro no se ha eliminado',
                             'error'
-                        )
+                        ),
+                        toastr.error('Verifique su conexión a Internet.', 'Error');
                     }
                 }); /* Fin Ajax */
             }

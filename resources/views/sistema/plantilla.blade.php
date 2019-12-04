@@ -68,7 +68,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('lib/AdminLTE/3.0.0/dist/js/demo.js') }}"></script>
 <!-- SweetAlert2 -->
-<script src="{{ asset('lib/AdminLTE/3.0.0/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('lib/sweetalert2/sweetalert2@9.js') }}"></script>
 <!-- Toastr -->
 <script src="{{ asset('lib/toastr/toastr.min.js') }}"></script>
 <!-- Campos Ocultos -->
