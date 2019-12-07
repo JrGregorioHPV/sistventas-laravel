@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Maatwebsite\Excel\Facades\Excel;
 use DataTables;
-use App\Categoria;
+use App\Departamento;
 
-class CategoriaController extends Controller
+class DepartamentoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,12 +25,9 @@ class CategoriaController extends Controller
 
         // DataTables
         if ($request->ajax()) {
-            $data = Categoria::latest()->get();
+            $data = Departamento::latest()->get();
 
             return datatables::of($data)
-        //return datatables()
-        //->eloquent(Categoria::query())
-        //->addColumn('btn', 'sistema.modulos.categoria.botones', function($row))
         ->addColumn('btn', function($row){
 
             $btn1 = '<a href="javascript:void(0)" data-toggle="modal" data-target="#modal-Mostrar" data-toggle="tooltip" data-id="'.$row->Id.'" data-original-title="Mostrar" id="btn-Mostrar" class="btn btn-success btn-sm mr-1">
@@ -50,7 +47,7 @@ class CategoriaController extends Controller
         //->toJson();
     }
 
-        return view('sistema.modulos.categoria.contenido', 
+        return view('sistema.modulos.departamento.contenido', 
         compact('Path', 'Url', 'NombreRuta'));
     }
 
@@ -73,7 +70,7 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         // Agregar
-        $Modelo = Categoria::updateOrCreate($request->all());        
+        $Modelo = Departamento::create($request->all());        
         
         return response()->json(
             ['success'=>'Guardado bien...', $Modelo]);
@@ -87,16 +84,11 @@ class CategoriaController extends Controller
      */
     public function show($id)
     {
-        /*
-        $dataCategoria = Categoria::findOrFail($id);
-        return view('sistema.modulos.categoria.mostrar', 
-            compact('dataCategoria'));
-            */
-            $datos = Categoria::find($id);
-            return view('sistema.modulos.categoria.mostrar', 
+        /* Mostrar */
+            $datos = Departamento::find($id);
+            return view('sistema.modulos.departamento.mostrar', 
             compact('datos'));
             
-            //return response()->json($datos);
     }
 
     /**
@@ -108,9 +100,8 @@ class CategoriaController extends Controller
     public function edit($id)
     {
         // Editar
-        $Datos = Categoria::find($id);
+        $Datos = Departamento::find($id);
         return response()->json($Datos); // JSON
-        //return view('sistema.modulos.categoria.editar', compact('Datos'));
     }
 
     /**
@@ -128,12 +119,11 @@ class CategoriaController extends Controller
             'Categoria' => 'required',
         ]);*/
 
-            $Modelo = Categoria::find($id);
-            //$Modelo->Categoria = $request->xCategoria;
-            //$Modelo->update($request->all());
-            //$Modelo = $request->all();
-            $Modelo->update(['Categoria' => $request->Categoria]);
-            //$Modelo->update();
+            $Modelo = Departamento::find($id);
+            $Modelo->update(
+                ['Departamento' => $request->Departamento,
+                'Descripcion' => $request->Descripcion]
+            );
             return response()->json(
             ['success' => 'El registro se ha actualizado', $Modelo]);
         }
@@ -148,24 +138,8 @@ class CategoriaController extends Controller
     public function destroy($id)
     {
         // Eliminar
-        $Modelo = Categoria::findOrFail($id);
+        $Modelo = Departamento::findOrFail($id);
         $Modelo->delete();
         return response()->json(['success'=>'El registro ha sido borrado.']);
-    }
-
-    public function excel()
-    {        
-        /**
-         * toma en cuenta que para ver los mismos 
-         * datos debemos hacer la misma consulta
-        **/
-        Excel::create('Laravel Excel', function($excel) {
-            $excel->sheet('Excel sheet', function($sheet) {
-                //otra opción -> $products = Product::select('name')->get();
-                $datos = Categoria::all();                
-                $sheet->fromArray($datos);
-                $sheet->setOrientation('landscape');
-            });
-        })->export('xls');
     }
 }

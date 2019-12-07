@@ -75,7 +75,6 @@
 <input type="hidden" id="Url" url="{{ $Url }}" />
 <input type="hidden" id="Path" url="{{ $Path }}" />
 <input type="hidden" id="AliasRuta" url="{{ $NombreRuta }}" />
-
 <!-- Sistema Js -->
 <script src="{{ asset('js/sistema/sistema.js') }}"></script>
 

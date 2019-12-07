@@ -36,8 +36,10 @@
             </a>
           </li>
 
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview {{ menuOpen('sistema/categoria') }}
+          {{ menuOpen('sistema/departamento') }}">
+            <a href="#" class="nav-link {{ active('sistema/categoria') }} 
+            {{ active('sistema/departamento') }}">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Almacén
@@ -46,17 +48,18 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-            <!-- Categoría -->
-              <li class="nav-item">
-                <a href="../layout/top-nav.html" class="nav-link">
+            <!-- Departamento -->
+            <li class="nav-item">
+                <a href="{{ url('sistema/departamento') }}" class="nav-link {{ active('sistema/departamento') }}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Categoría</p>
+                  <p>Departamento</p>
                 </a>
               </li>
+              <!-- Categoría -->
               <li class="nav-item">
-                <a href="../layout/fixed-footer.html" class="nav-link">
+                <a href="{{ url('sistema/categoria') }}" class="nav-link {{ active('sistema/categoria') }}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Fixed Footer</p>
+                  <p>Categoría</p>
                 </a>
               </li>
             </ul>

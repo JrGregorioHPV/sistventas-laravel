@@ -102,6 +102,7 @@ $(document).ready(function (){
 
         var dataString = $("#Formulario :input[id!='Id'][name!='_method'][name!='_token']").serialize();
         console.log('salida: '+dataString);
+        var datas = $("#Formulario").serialize();
         
         if (Metodo == "Agregar"){
             DatosFormulario(); /* Función Datos Formulario */

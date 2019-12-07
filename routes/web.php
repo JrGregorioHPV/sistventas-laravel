@@ -26,3 +26,7 @@ Route::get('/sistema', 'Sistema\InicioController@index')->name('sistema');
 
 /* Sistema -> Categoría */
 Route::resource('/sistema/categoria', 'Sistema\CategoriaController');
+
+/* Sistema -> Departamento */
+Route::resource('/sistema/departamento', 'Sistema\DepartamentoController');
+//Route::get('/sistema/categoria/descargar-categoria', 'Sistema\CategoriaController@excel')->name('categoria.excel');

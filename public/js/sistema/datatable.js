@@ -1,7 +1,8 @@
 $(document).ready(function (){
+  DataTableColumnas();
   console.log('url: '+Url);
     // DataTables
-    Tabla = $('#tbl_Categoria').DataTable({
+    Tabla = $('#tbl_Contenido').DataTable({
         processing: true,
         serverSide: true,
         ajax: Url, // Dirección URL
@@ -12,14 +13,9 @@ $(document).ready(function (){
         lengthChange: true,
         autoWidth: false,
         order: [[ 0, "desc" ]], // Id orden Ascendente
-        columns: [
-          {data: 'Id'},
-          {data: 'Categoria'},
-          {data: 'created_at'},
-          {data: 'btn'},
-        ],
+        columns: columnas,
         columnDefs: [ {
-        targets: 2,
+        targets: targets,
         render:function(data){
         return moment(data).format('DD/MM/YYYY');}
       } ],
@@ -43,5 +39,4 @@ $(document).ready(function (){
           infoFiltered: ""
         }
       });
-    
   });

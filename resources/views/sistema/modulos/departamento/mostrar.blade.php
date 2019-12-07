@@ -2,13 +2,12 @@
 <table class="table table-hover" id="Tabla-Mostrar">
     <tr>
         <th>ID</th>
-        <th>Categoría</th>
+        <th>Departamento</th>
         <th>Fecha de Creación</th>
     </tr>
     <tr>
         <td>{{ $datos->Id }}</td>
-        <td>{{ $datos->Categoria }}</td>
+        <td>{{ $datos->Departamento }}</td>
         <td>{{ $datos->created_at }}</td>
     </tr>
 </table>
-
