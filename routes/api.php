@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Categoria;
+use App\Departamento;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +19,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/* Departamento */
+Route::get('departamentos', function(){  
+    $departamento = Departamento::all();
+    return response()->json($departamento);
+});
+
 /* Datatables -> Categoría */
 Route::get('categorias', function(){
-    return datatables()
-        ->eloquent(App\Categoria::query())
-        ->toJson();
+    $categorias = Categoria::all();
+    return response()->json($categorias);
 });

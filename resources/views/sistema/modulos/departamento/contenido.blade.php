@@ -20,7 +20,7 @@
       <div class="col-sm-12">
         <!-- Botón Agregar -->
         <a href="#" data-original-title="Mostrar" name="POST" id="btn-Agregar" data-toggle="modal" data-target="#modal-AgregarEditar" class="btn btn-primary">
-        <i class="fas fa-plus-circle mr-1"></i>Agregar Categoría</a>
+        <i class="fas fa-plus-circle mr-1"></i>Agregar Departamento</a>
         <!-- Botón PDF -->
         <a href="#" data-original-title="PDF" name="POST" id="btn-Excel" data-toggle="modal" data-target="#modal-" class="btn btn-danger">
         <i class="far fa-file-pdf mr-1"></i>PDF</a>

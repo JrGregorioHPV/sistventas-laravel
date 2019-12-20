@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Sistema;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Maatwebsite\Excel\Facades\Excel;
 use DataTables;
 use App\Categoria;
+use App\Departamento;
 
 class CategoriaController extends Controller
 {
@@ -19,39 +21,38 @@ class CategoriaController extends Controller
      */
     public function index(Request $request)
     {
-        $Path = $request->path(); /* Path */
-        $Url = $request->url(); /* URL */
-        $NombreRuta = $request->route()->getName(); /* Alias Ruta */
+        $Root  = $request->root(); /* Root */
+        $Url   = $request->url(); /* URL */
+        $Path  = $request->path(); /* Path */
+        $Alias = $request->route()->getName(); /* Alias Ruta */
+
+        $cat = Categoria::all();
+        $dep = Departamento::all();
 
         // DataTables
         if ($request->ajax()) {
-            $data = Categoria::latest()->get();
-
-            return datatables::of($data)
-        //return datatables()
-        //->eloquent(Categoria::query())
-        //->addColumn('btn', 'sistema.modulos.categoria.botones', function($row))
-        ->addColumn('btn', function($row){
+            $categoria = Categoria::latest()->get();
+            return datatables::of($categoria)
+                ->addColumn('Departamento',function($data_dep){
+                    return $data_dep->Departamento->Departamento;})
+                ->addColumn('btn', function($row){
 
             $btn1 = '<a href="javascript:void(0)" data-toggle="modal" data-target="#modal-Mostrar" data-toggle="tooltip" data-id="'.$row->Id.'" data-original-title="Mostrar" id="btn-Mostrar" class="btn btn-success btn-sm mr-1">
             <i class="fas fa-eye mr-1"></i>Ver</a>';
 
             $btn2 = '<a href="javascript:void(0)" data-toggle="modal" data-target="#modal-AgregarEditar" data-id="'.$row->Id.'" data-original-title="Editar" id="btn-Editar" class="btn btn-warning btn-sm mr-1">
-        <i class="fas fa-edit mr-1"></i>Editar</a>';
+            <i class="fas fa-edit mr-1"></i>Editar</a>';
    
             $btn3 = $btn1.$btn2.'<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->Id.'" data-original-title="Eliminar" id="btn-Eliminar" class="btn btn-danger btn-sm">
-           <i class="far fa-trash-alt mr-1"></i>Eliminar</a>';
-    
-                            return $btn3;
-                        })
-
+            <i class="far fa-trash-alt mr-1"></i>Eliminar</a>';
+            
+            return $btn3;
+        })
         ->rawColumns(['btn'])
         ->make(true);
-        //->toJson();
     }
-
         return view('sistema.modulos.categoria.contenido', 
-        compact('Path', 'Url', 'NombreRuta'));
+        compact('Root', 'Url', 'Path', 'Alias', 'cat', 'dep'));
     }
 
     /**
@@ -73,7 +74,7 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         // Agregar
-        $Modelo = Categoria::updateOrCreate($request->all());        
+        $Modelo = Categoria::create($request->all());        
         
         return response()->json(
             ['success'=>'Guardado bien...', $Modelo]);
@@ -87,16 +88,12 @@ class CategoriaController extends Controller
      */
     public function show($id)
     {
-        /*
-        $dataCategoria = Categoria::findOrFail($id);
-        return view('sistema.modulos.categoria.mostrar', 
-            compact('dataCategoria'));
-            */
-            $datos = Categoria::find($id);
-            return view('sistema.modulos.categoria.mostrar', 
-            compact('datos'));
+        /* Mostrar */
+        $Categoria = Categoria::with('departamento')
+        ->where('categorias.Id', $id)
+        ->get();
             
-            //return response()->json($datos);
+        return response()->json($Categoria); // JSON
     }
 
     /**
@@ -108,9 +105,10 @@ class CategoriaController extends Controller
     public function edit($id)
     {
         // Editar
-        $Datos = Categoria::find($id);
-        return response()->json($Datos); // JSON
-        //return view('sistema.modulos.categoria.editar', compact('Datos'));
+        $Categoria = Categoria::with('departamento')
+        ->where('categorias.Id', $id)
+        ->get();
+        return response()->json($Categoria); // JSON
     }
 
     /**
@@ -132,7 +130,10 @@ class CategoriaController extends Controller
             //$Modelo->Categoria = $request->xCategoria;
             //$Modelo->update($request->all());
             //$Modelo = $request->all();
-            $Modelo->update(['Categoria' => $request->Categoria]);
+            $Modelo->update([
+                'dep_Id' => $request->dep_Id,
+                'Categoria' => $request->Categoria,
+                'Descripcion' => $request->Descripcion]);
             //$Modelo->update();
             return response()->json(
             ['success' => 'El registro se ha actualizado', $Modelo]);

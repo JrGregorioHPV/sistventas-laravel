@@ -43,11 +43,23 @@ $(document).ready(function (){
 
         $.ajax({
             url: Url +'/' + Id,
-            dataType: 'html',
-            success: function(response){
-                $('#modal-body').html(response);
+            dataType: 'json',
+            success: function(datos){
+                //$('#modal-body').html(data);
+                FilaTabla(datos);
             }
         });
+        /*$.get(Url +'/' + Id , function (response) {
+            for (  i = 0 ; i < response.length; i++){ //cuenta la cantidad de registros
+                var nuevafila= "<tr><td>" +
+                response[i].Id + "</td><td>" +
+                response[i].Categoria + "</td><td>" +
+                response[i].Descripcion + "</td></tr>";
+    
+                $("#Tabla-Mostrar").append(nuevafila);
+                console.log('d:'+response[i].Categoria);
+            }
+        });*/
             /* Cabecera Modal */
             $('.modal-header')
                 .removeClass('bg-primary bg-warning bg-danger')
@@ -85,9 +97,11 @@ $(document).ready(function (){
                 .html("Modificar")
                 .removeClass('btn-primary')
                 .addClass('btn-warning');
-            /* Captura de Datos */
-            /* Salida en Consola */
-            CapturaDatos(datos);           
+            /* Muestra Datos */
+            console.log('Id: '+Id);
+            MuestraDatos(datos);  
+            
+            
         });
     });
 
@@ -101,13 +115,15 @@ $(document).ready(function (){
         Metodo = $("#btn-Guardar").attr("data-original-title");
 
         var dataString = $("#Formulario :input[id!='Id'][name!='_method'][name!='_token']").serialize();
-        console.log('salida: '+dataString);
+        
         var datas = $("#Formulario").serialize();
         
         if (Metodo == "Agregar"){
             DatosFormulario(); /* Función Datos Formulario */
+            console.log('Salida: '+dataString);
+            console.log('info agregar: '+JSON.stringify(Datos));
             type = "POST"; //for updating existing resource
-            my_url = Url;
+            my_url = Url; console.log('URL: '+my_url);
             /* SweetAlert2 */
             var icon = 'success';
             var title = 'Registro Agregado';
@@ -116,9 +132,10 @@ $(document).ready(function (){
         }
         if (Metodo == "Editar"){
             DatosFormulario(); /* Función Datos Formulario */
-            console.log('info: '+JSON.stringify(Datos));
+            console.log('Salida: '+dataString);
+            console.log('info editar: '+JSON.stringify(Datos));
             type = "PUT"; //for updating existing resource
-            my_url += '/' + Id;
+            my_url += '/' + Id; console.log('URL: '+my_url);
             /* Mensaje SweetAlert2 */
             var icon = 'success';
             var title = 'Registro Modificado';

@@ -20,6 +20,11 @@ class Categoria extends Model
 
     /* Campos */
     protected $fillable = [
-        'Categoria'
+        'dep_Id', 'Categoria', 'Descripcion', 
     ];
+
+    /**/
+    public function departamento(){
+        return $this->belongsTo('App\Departamento', 'dep_Id', 'Id');
+    }
 }

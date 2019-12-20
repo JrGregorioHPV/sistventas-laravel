@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\URL;
 use Maatwebsite\Excel\Facades\Excel;
 use DataTables;
 use App\Departamento;
+use App\Categoria;
 
 class DepartamentoController extends Controller
 {
@@ -19,9 +20,10 @@ class DepartamentoController extends Controller
      */
     public function index(Request $request)
     {
-        $Path = $request->path(); /* Path */
-        $Url = $request->url(); /* URL */
-        $NombreRuta = $request->route()->getName(); /* Alias Ruta */
+        $Root  = $request->root(); /* Root */
+        $Url   = $request->url(); /* URL */
+        $Path  = $request->path(); /* Path */
+        $Alias = $request->route()->getName(); /* Alias Ruta */
 
         // DataTables
         if ($request->ajax()) {
@@ -48,7 +50,7 @@ class DepartamentoController extends Controller
     }
 
         return view('sistema.modulos.departamento.contenido', 
-        compact('Path', 'Url', 'NombreRuta'));
+        compact('Root', 'Url', 'Path', 'Alias',));
     }
 
     /**
@@ -86,8 +88,10 @@ class DepartamentoController extends Controller
     {
         /* Mostrar */
             $datos = Departamento::find($id);
-            return view('sistema.modulos.departamento.mostrar', 
-            compact('datos'));
+            /*return view('sistema.modulos.departamento.mostrar', 
+            compact('datos'));*/
+            //$datitos = $datos->categoria;
+            return response()->json($datos);
             
     }
 

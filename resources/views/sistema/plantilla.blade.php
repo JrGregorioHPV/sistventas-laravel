@@ -71,10 +71,11 @@
 <script src="{{ asset('lib/sweetalert2/sweetalert2@9.js') }}"></script>
 <!-- Toastr -->
 <script src="{{ asset('lib/toastr/toastr.min.js') }}"></script>
-<!-- Campos Ocultos -->
+<!-- Rutas -> Campos Ocultos -->
+<input type="hidden" id="Root" url="{{ $Root }}" />
 <input type="hidden" id="Url" url="{{ $Url }}" />
 <input type="hidden" id="Path" url="{{ $Path }}" />
-<input type="hidden" id="AliasRuta" url="{{ $NombreRuta }}" />
+<input type="hidden" id="AliasRuta" url="{{ $Alias }}" />
 <!-- Sistema Js -->
 <script src="{{ asset('js/sistema/sistema.js') }}"></script>
 

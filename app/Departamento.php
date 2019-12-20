@@ -16,4 +16,8 @@ class Departamento extends Model
     protected $fillable = [
         'Departamento', 'Descripcion'
     ];
+
+    public function categoria(){
+        return $this->hasMany('App\Categoria', 'dep_Id', 'Id');
+    }
 }

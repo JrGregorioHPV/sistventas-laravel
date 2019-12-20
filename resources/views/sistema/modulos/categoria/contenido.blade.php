@@ -54,6 +54,8 @@
             <tr>
               <th>ID</th>
               <th>Categoría</th>
+              <th>Departamento</th>
+              <th>Descripción</th>
               <th>Fecha de Creación</th>
               <th>&nbsp;Acciones</th>
             </tr>
@@ -79,6 +81,22 @@
       </div>
       <!-- card-body -->
       <div class="modal-body" id="modal-body">
+      <input type="hidden" name="_id" id="Id-Mostrar">
+<table class="table table-hover" id="Tabla-Mostrar">
+<thead>
+    <tr>
+        <th>ID</th>
+        <th>Categoría</th>
+        <th>Departamento</th>
+        <th>Fecha de Creación</th>
+    </tr>
+    </thead>
+    <tbody id="Tabla-Datos">
+    <tr>
+      
+    </tr>
+    </tbody>
+</table>
       </div> <!-- /.card-body -->
       <div class="modal-footer ">
         <button type="submit" id="btn-OK" data-original-title="" class="btn btn-primary" data-dismiss="modal">Save changes</button>          
@@ -103,6 +121,9 @@
           <input type="hidden" name="_id" id="Id">
           <input type="hidden" name="_method" value="">
             @include('sistema.modulos.categoria.editar')
+            <div class="form-group">
+    
+  </div>
             {{ csrf_field() }}
         </form>
       </div> <!-- /.card-body -->
